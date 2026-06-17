@@ -215,14 +215,14 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 
 <!-- INTRO -->
 <div id="intro">
-  <img id="intro-logo" src="img/logo.jpg" alt="Selim">
+  <img id="intro-logo" src="img/logo.jpg.jpeg" alt="Selim">
   <div id="intro-count"></div>
   <div id="intro-bar"></div>
 </div>
 
 <!-- NAV -->
 <nav id="nav">
-  <div class="nav-logo"><a href="#"><img src="img/logo.jpg" alt="Selim Raimundos"></a></div>
+  <div class="nav-logo"><a href="#"><img src="img/logo.jpg.jpeg" alt="Selim Raimundos"></a></div>
   <ul class="nav-links">
     <li><a href="#banda">A Banda</a></li>
     <li><a href="#galeria">Fotos</a></li>
@@ -241,7 +241,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   <div class="hero-overlay-red"></div>
   <div class="hero-content">
     <div class="hero-eyebrow">// Cover dos Raimundos · Marília SP //</div>
-    <img class="hero-logo-img" src="img/logo.jpg" alt="Selim Raimundos">
+    <img class="hero-logo-img" src="img/logo.jpg.jpeg" alt="Selim Raimundos">
     <p class="hero-tagline">Do quintal pro palco.<br><strong>Sem pedir licença.</strong></p>
     <div class="hero-actions">
       <a href="#video" class="btn btn-red">
@@ -328,7 +328,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
         </div>
       </div>
       <div class="member">
-        <img src="img/silvio-2.jpg" alt="Silvio Junior">
+        <img src="img/silvio-2.jpeg" alt="Silvio Junior">
         <div class="member-info">
           <div class="member-name">SILVIO JR</div>
           <div class="member-role">Baixo</div>
@@ -363,7 +363,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
     <div class="gal-item" onclick="openLb(4)"><img src="img/jorge-4.jpg" alt="Jorge"></div>
     <div class="gal-item" onclick="openLb(5)"><img src="img/jorge-5.jpg" alt="Jorge"></div>
     <!-- SILVIO (2 fotos) -->
-    <div class="gal-item" onclick="openLb(6)"><img src="img/silvio-2.jpg" alt="Silvio Junior"></div>
+    <div class="gal-item" onclick="openLb(6)"><img src="img/silvio-2.jpeg" alt="Silvio Junior"></div>
     <div class="gal-item" onclick="openLb(7)"><img src="img/silvio-3.jpg" alt="Silvio Junior"></div>
     <!-- PAULINHO (2 fotos) -->
     <div class="gal-item" onclick="openLb(8)"><img src="img/paulinho-1.jpg" alt="Paulinho"></div>
@@ -434,7 +434,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 </section>
 
 <footer>
-  <div class="footer-logo"><img src="img/logo.jpg" alt="Selim"></div>
+  <div class="footer-logo"><img src="img/logo.jpg.jpeg" alt="Selim"></div>
   <div class="footer-copy">© 2025 Selim Raimundos Cover · Marília SP</div>
   <a href="mailto:raimundoscoverselim@gmail.com" class="footer-mail">raimundoscoverselim@gmail.com</a>
 </footer>
@@ -497,7 +497,7 @@ const ro=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.tar
 document.querySelectorAll('.reveal').forEach(r=>ro.observe(r));
 
 /* LIGHTBOX */
-const lbSrcs=['img/banda-green.jpg','img/banda-3.jpg','img/banda-2.jpg','img/jorge-2.jpg','img/jorge-4.jpg','img/jorge-5.jpg','img/silvio-2.jpg','img/silvio-3.jpg','img/paulinho-1.jpg','img/paulinho-2.jpg','img/tiago-1.jpg','img/tiago-2.jpg'];
+const lbSrcs=['img/banda-green.jpg','img/banda-3.jpg','img/banda-2.jpg','img/jorge-2.jpg','img/jorge-4.jpg','img/jorge-5.jpg','img/silvio-2.jpeg','img/silvio-3.jpg','img/paulinho-1.jpg','img/paulinho-2.jpg','img/tiago-1.jpg','img/tiago-2.jpg'];
 let lbIdx=0;
 const lb=document.getElementById('lightbox'),lbImg=document.getElementById('lb-img');
 function openLb(i){lbIdx=i;lbImg.src=lbSrcs[i];lb.classList.add('open');document.body.style.overflow='hidden';}
