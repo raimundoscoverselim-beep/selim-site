@@ -82,6 +82,12 @@ nav{
 }
 nav.solid{background:rgba(8,8,8,.96);backdrop-filter:blur(10px);border-bottom:1px solid #1a1a1a;}
 .nav-logo{display:flex;align-items:center;gap:0;cursor:pointer;text-decoration:none;}
+.nav-logo-icon{
+  width:28px;height:auto;flex-shrink:0;margin-right:10px;display:block;
+  filter:drop-shadow(0 0 4px rgba(224,32,32,.7));
+  transition:filter .3s;
+}
+.nav-logo:hover .nav-logo-icon{filter:drop-shadow(0 0 8px rgba(224,32,32,1));}
 .nav-logo-mark{display:flex;flex-direction:column;line-height:1;}
 .nav-logo-name{font-family:var(--display);font-size:26px;letter-spacing:4px;color:#fff;line-height:1;}
 .nav-logo-sub{font-family:var(--mono);font-size:8px;letter-spacing:3px;color:var(--red);text-transform:uppercase;margin-top:1px;}
@@ -96,6 +102,7 @@ nav.solid{background:rgba(8,8,8,.96);backdrop-filter:blur(10px);border-bottom:1p
 .burger span{display:block;width:22px;height:2px;background:var(--ink);transition:.25s;}
 @media(max-width:768px){
   nav{padding:12px 20px;}
+  .nav-logo-icon{width:24px;margin-right:8px;}
   .nav-links{display:none;}
   .burger{display:flex;}
   nav.open .nav-links{
@@ -371,6 +378,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 <!-- NAV -->
 <nav id="nav">
   <a class="nav-logo" href="#">
+    <img class="nav-logo-icon" src="img/logo-icon.png" alt="Selim">
     <div class="nav-logo-mark">
       <span class="nav-logo-name">SELIM</span>
       <span class="nav-logo-sub">Raimundos Cover</span>
