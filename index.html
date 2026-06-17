@@ -32,27 +32,46 @@ button{font-family:var(--body);cursor:pointer;border:none;background:none;}
 /* ── INTRO ── */
 #intro{
   position:fixed;inset:0;background:#000;z-index:9999;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;
+}
+.intro-stage{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  width:100%;text-align:center;
 }
 .intro-num{
-  font-family:var(--display);font-size:clamp(100px,25vw,240px);
-  color:var(--red);line-height:1;
-  opacity:0;transform:scale(1.2);transition:opacity .15s,transform .15s;
+  font-family:var(--display);
+  font-size:clamp(120px,28vw,260px);
+  color:var(--red);line-height:1;letter-spacing:-4px;
+  opacity:0;transform:scale(1.3);
+  transition:opacity .12s ease-out,transform .12s ease-out;
+  position:absolute;
 }
 .intro-num.show{opacity:1;transform:scale(1);}
-.intro-word{
-  font-family:var(--display);font-size:clamp(60px,15vw,140px);
-  color:#fff;letter-spacing:6px;line-height:1;
-  opacity:0;transform:translateY(20px);transition:opacity .3s,transform .3s;
+.intro-num.hide{opacity:0;transform:scale(.7);}
+.intro-reveal{
+  display:flex;flex-direction:column;align-items:center;
+  gap:8px;opacity:0;transform:translateY(24px);
+  transition:opacity .35s ease-out,transform .35s ease-out;
+  position:absolute;
 }
-.intro-word.show{opacity:1;transform:translateY(0);}
+.intro-reveal.show{opacity:1;transform:translateY(0);}
+.intro-name{
+  font-family:var(--display);
+  font-size:clamp(72px,18vw,180px);
+  color:#fff;letter-spacing:8px;line-height:1;
+}
 .intro-sub{
-  font-family:var(--mono);font-size:clamp(10px,2vw,13px);letter-spacing:4px;
-  color:var(--red);text-transform:uppercase;margin-top:12px;
-  opacity:0;transition:opacity .3s .1s;
+  font-family:var(--mono);font-size:clamp(10px,1.5vw,13px);
+  letter-spacing:5px;color:var(--red);text-transform:uppercase;
 }
-.intro-sub.show{opacity:1;}
-.intro-bar{width:0;height:2px;background:var(--red);margin-top:24px;transition:width .3s linear;max-width:200px;}
+.intro-bar-wrap{
+  position:absolute;bottom:10vh;left:50%;transform:translateX(-50%);
+  width:160px;height:1px;background:#1a1a1a;
+}
+.intro-bar-fill{
+  height:100%;width:0;background:var(--red);transition:width .45s linear;
+}
 
 /* ── NAV ── */
 nav{
@@ -62,9 +81,12 @@ nav{
   transition:background .3s,backdrop-filter .3s;
 }
 nav.solid{background:rgba(8,8,8,.96);backdrop-filter:blur(10px);border-bottom:1px solid #1a1a1a;}
-.nav-logo{display:flex;align-items:center;gap:12px;cursor:pointer;}
-.nav-logo img{height:38px;width:auto;mix-blend-mode:screen;filter:brightness(1.3);}
-.nav-logo-text{font-family:var(--display);font-size:22px;letter-spacing:3px;color:#fff;display:none;}
+.nav-logo{display:flex;align-items:center;gap:0;cursor:pointer;text-decoration:none;}
+.nav-logo-mark{display:flex;flex-direction:column;line-height:1;}
+.nav-logo-name{font-family:var(--display);font-size:26px;letter-spacing:4px;color:#fff;line-height:1;}
+.nav-logo-sub{font-family:var(--mono);font-size:8px;letter-spacing:3px;color:var(--red);text-transform:uppercase;margin-top:1px;}
+.nav-logo-dot{width:6px;height:6px;border-radius:50%;background:var(--red);margin-left:4px;margin-bottom:2px;align-self:flex-end;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(.7);}}
 .nav-links{display:flex;align-items:center;gap:32px;list-style:none;}
 .nav-links a{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);transition:color .2s;}
 .nav-links a:hover{color:var(--yellow);}
@@ -183,22 +205,26 @@ section{padding:96px 48px;}
 
 /* ── REPERTÓRIO ── */
 #rep{background:var(--p2);}
-.rep-head{display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:40px;}
-.rep-count{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--muted);}
-.rep-search{position:relative;margin-bottom:0;}
-.rep-search input{background:var(--p3);border:1px solid var(--p4);color:var(--ink);font-family:var(--mono);font-size:11px;letter-spacing:1px;padding:10px 40px 10px 14px;width:220px;outline:none;transition:border-color .2s;}
-.rep-search input:focus{border-color:var(--red);}
-.rep-search input::placeholder{color:var(--muted);}
-.rep-search .sc{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:14px;color:var(--muted);}
-.songs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:0;border-top:1px solid var(--p4);}
-.song-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--p4);transition:background .15s;}
-.song-row:hover{background:rgba(204,31,31,.05);padding-left:8px;}
-.song-name{font-size:15px;font-weight:400;color:var(--ink);}
-.song-dur{font-family:var(--mono);font-size:10px;color:var(--muted);white-space:nowrap;}
-.songs-col{border-left:1px solid var(--p4);padding:0 20px;}
-.songs-col:first-child{padding-left:0;border-left:none;}
-.rep-empty{font-family:var(--mono);font-size:12px;color:var(--muted);padding:24px 0;display:none;}
-@media(max-width:768px){.songs-grid{grid-template-columns:1fr;}.songs-col{border-left:none;padding:0;}}
+.rep-wrap{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:48px;align-items:start;}
+/* Setlist visual */
+.setlist-paper{background:#0e0e0e;border:1px solid #2a2a2a;padding:32px;position:relative;}
+.setlist-paper::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,var(--red),var(--yellow));}
+.setlist-header{font-family:var(--mono);font-size:9px;letter-spacing:3px;color:var(--red);text-transform:uppercase;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid #222;}
+.setlist-row{display:flex;align-items:flex-start;gap:14px;padding:11px 0;border-bottom:1px solid #141414;}
+.setlist-num{font-family:var(--mono);font-size:10px;color:var(--muted);min-width:22px;padding-top:2px;}
+.setlist-info{flex:1;}
+.setlist-song{font-family:var(--display);font-size:18px;color:#fff;letter-spacing:.5px;line-height:1.1;}
+.setlist-vibe{font-family:var(--body);font-style:italic;font-size:13px;color:var(--muted);margin-top:2px;}
+.setlist-mais{padding:16px 0 0;font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:1px;}
+.setlist-mais span{color:var(--yellow);}
+/* Mais pedidas */
+.pedidas-title{font-family:var(--mono);font-size:9px;letter-spacing:3px;color:var(--red);text-transform:uppercase;margin-bottom:20px;}
+.pedida-card{background:var(--p3);border-left:3px solid var(--red);padding:16px 18px;margin-bottom:10px;transition:border-color .2s,transform .2s;}
+.pedida-card:hover{border-color:var(--yellow);transform:translateX(4px);}
+.pedida-nome{font-family:var(--display);font-size:20px;color:#fff;letter-spacing:.5px;}
+.pedida-desc{font-family:var(--body);font-style:italic;font-size:14px;color:var(--muted);margin-top:4px;line-height:1.4;}
+.pedida-fire{font-size:14px;margin-top:6px;}
+@media(max-width:768px){.rep-wrap{grid-template-columns:1fr;}}
 
 /* ── JÁ TOCAMOS EM ── */
 #eventos{background:var(--preto);}
@@ -267,25 +293,30 @@ section{padding:96px 48px;}
 .show-time{font-family:var(--mono);font-size:11px;color:var(--yellow);background:rgba(245,196,0,.07);border:1px solid rgba(245,196,0,.2);padding:7px 14px;white-space:nowrap;}
 @media(max-width:768px){.show{grid-template-columns:72px 1fr;gap:16px;}.show-num{font-size:36px;}.show-time{display:none;}}
 
-/* ── CONTRATANTE ── */
+/* ── CONTRATAR: STATS + DEPOIMENTOS ── */
 #contratar{background:var(--preto);position:relative;overflow:hidden;}
 #contratar::before{content:'';position:absolute;top:-200px;right:-200px;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(204,31,31,.06),transparent 70%);pointer-events:none;}
-.contratar-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:56px;}
-.rider-box{background:var(--p3);border:1px solid var(--p4);padding:32px;}
-.rider-title{font-family:var(--display);font-size:20px;color:var(--yellow);letter-spacing:1px;margin-bottom:20px;}
-.rider-item{display:flex;gap:14px;padding:10px 0;border-bottom:1px solid var(--p4);}
-.rider-item:last-child{border:none;}
-.rider-icon{font-size:18px;min-width:24px;}
-.rider-txt{font-size:14px;color:var(--ink);opacity:.8;}
-.rider-txt strong{color:#fff;font-weight:600;display:block;margin-bottom:2px;}
-.contratar-cta{display:flex;flex-direction:column;justify-content:center;gap:24px;}
+.contratar-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;margin-top:56px;align-items:start;}
+/* stats */
+.stats-box{display:grid;grid-template-columns:1fr 1fr;gap:3px;margin-bottom:32px;}
+.stat{background:var(--p3);border:1px solid var(--p4);padding:24px 20px;}
+.stat-num{font-family:var(--display);font-size:clamp(48px,6vw,72px);color:var(--red);line-height:1;}
+.stat-label{font-family:var(--mono);font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-top:4px;}
+/* depoimentos */
+.dep-title{font-family:var(--mono);font-size:9px;letter-spacing:3px;color:var(--red);text-transform:uppercase;margin-bottom:16px;}
+.dep-card{background:var(--p3);border:1px solid var(--p4);padding:20px;margin-bottom:10px;position:relative;}
+.dep-card::before{content:'"';font-family:var(--display);font-size:60px;color:var(--red);position:absolute;top:-8px;left:14px;line-height:1;opacity:.4;}
+.dep-texto{font-size:15px;font-style:italic;color:var(--ink);opacity:.85;line-height:1.6;padding-top:16px;}
+.dep-autor{font-family:var(--mono);font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-top:10px;}
+/* cta */
+.contratar-cta{display:flex;flex-direction:column;justify-content:center;gap:20px;}
 .contratar-cta h3{font-family:var(--display);font-size:clamp(40px,6vw,72px);color:#fff;line-height:.9;}
 .contratar-cta p{font-size:16px;color:var(--muted);line-height:1.6;}
 .btn-wa{background:#25D366;color:#fff;font-size:13px;}
 .btn-wa:hover{background:#1ebe5a;transform:translateY(-2px);}
 .btn-mail{background:var(--p3);color:var(--ink);border:1px solid var(--p4);}
 .btn-mail:hover{border-color:var(--yellow);color:var(--yellow);transform:translateY(-2px);}
-@media(max-width:768px){.contratar-grid{grid-template-columns:1fr;}}
+@media(max-width:768px){.contratar-grid{grid-template-columns:1fr;}.stats-box{grid-template-columns:1fr 1fr;}}
 
 /* ── MERCH ── */
 #merch{background:var(--p2);}
@@ -311,7 +342,7 @@ section{padding:96px 48px;}
 .soc-icon{font-size:24px;}
 .soc-name{font-family:var(--mono);font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;}
 footer{background:var(--p2);padding:28px 48px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid #141414;flex-wrap:wrap;gap:12px;}
-.ft-logo img{height:32px;mix-blend-mode:screen;opacity:.2;}
+.ft-logo{font-family:var(--display);font-size:18px;letter-spacing:3px;color:#2a2a2a;}
 .ft-copy{font-family:var(--mono);font-size:9px;letter-spacing:1px;color:var(--muted2);}
 .ft-mail{font-family:var(--mono);font-size:9px;letter-spacing:1px;color:var(--muted2);transition:color .2s;}
 .ft-mail:hover{color:var(--red);}
@@ -325,16 +356,26 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 
 <!-- INTRO -->
 <div id="intro">
-  <div class="intro-num" id="iNum"></div>
-  <div class="intro-word" id="iWord" style="display:none;">SELIM</div>
-  <div class="intro-sub" id="iSub" style="display:none;">Cover dos Raimundos</div>
-  <div class="intro-bar" id="iBar"></div>
+  <div class="intro-stage">
+    <div class="intro-num" id="iNum"></div>
+    <div class="intro-reveal" id="iReveal">
+      <div class="intro-name">SELIM</div>
+      <div class="intro-sub">Cover dos Raimundos · Marília SP</div>
+    </div>
+  </div>
+  <div class="intro-bar-wrap">
+    <div class="intro-bar-fill" id="iBar"></div>
+  </div>
 </div>
 
 <!-- NAV -->
 <nav id="nav">
   <a class="nav-logo" href="#">
-    <img src="img/logo.jpg.jpeg" alt="Selim">
+    <div class="nav-logo-mark">
+      <span class="nav-logo-name">SELIM</span>
+      <span class="nav-logo-sub">Raimundos Cover</span>
+    </div>
+    <div class="nav-logo-dot"></div>
   </a>
   <ul class="nav-links">
     <li><a href="#banda">A Banda</a></li>
@@ -454,21 +495,93 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 <!-- REPERTÓRIO -->
 <section id="rep">
   <div class="reveal">
-    <div class="s-tag">// O que a gente toca</div>
+    <div class="s-tag">// Uma noite com a Selim</div>
     <h2 class="s-title">REPERTÓRIO</h2>
   </div>
-  <div class="rep-head reveal" style="margin-top:40px;transition-delay:.1s;">
-    <div>
-      <div class="rep-count" id="repCount">38 músicas no bagageiro 🎸</div>
+  <div class="rep-wrap">
+    <!-- SETLIST VISUAL -->
+    <div class="reveal" style="transition-delay:.1s;">
+      <div class="setlist-paper">
+        <div class="setlist-header">🤘 SETLIST — UMA NOITE COM A SELIM</div>
+        <div class="setlist-row">
+          <span class="setlist-num">01</span>
+          <div class="setlist-info">
+            <div class="setlist-song">Fome do Cão</div>
+            <div class="setlist-vibe">O mosh pit implode quando essa entra</div>
+          </div>
+        </div>
+        <div class="setlist-row">
+          <span class="setlist-num">02</span>
+          <div class="setlist-info"><div class="setlist-song">Tora Tora</div></div>
+        </div>
+        <div class="setlist-row">
+          <span class="setlist-num">03</span>
+          <div class="setlist-info">
+            <div class="setlist-song">Mulher de Fases</div>
+            <div class="setlist-vibe">Toda mulher na plateia canta junto</div>
+          </div>
+        </div>
+        <div class="setlist-row">
+          <span class="setlist-num">04</span>
+          <div class="setlist-info"><div class="setlist-song">Baile Funky</div></div>
+        </div>
+        <div class="setlist-row">
+          <span class="setlist-num">05</span>
+          <div class="setlist-info">
+            <div class="setlist-song">Esporrei na Manivela</div>
+            <div class="setlist-vibe">Proibida de tocar em alguns municípios 🚨</div>
+          </div>
+        </div>
+        <div class="setlist-row">
+          <span class="setlist-num">06</span>
+          <div class="setlist-info"><div class="setlist-song">Deixa Eu Falar...</div></div>
+        </div>
+        <div class="setlist-row">
+          <span class="setlist-num">07</span>
+          <div class="setlist-info">
+            <div class="setlist-song">Reggae do Manero</div>
+            <div class="setlist-vibe">6 minutos de puro caos organizado</div>
+          </div>
+        </div>
+        <div class="setlist-row">
+          <span class="setlist-num">08</span>
+          <div class="setlist-info"><div class="setlist-song">Eu Quero Ver o Oco</div></div>
+        </div>
+        <div class="setlist-mais">
+          + <span>30 músicas</span> mais no bagageiro.<br>
+          <span style="color:var(--ink);font-style:italic;">"Vem pro show descobrir o resto." 🤘</span>
+        </div>
+      </div>
     </div>
-    <div class="rep-search">
-      <input type="text" id="repSearch" placeholder="BUSCAR MÚSICA..." oninput="filterSongs()">
-      <span class="sc">🔍</span>
+    <!-- AS MAIS PEDIDAS -->
+    <div class="reveal" style="transition-delay:.2s;">
+      <div class="pedidas-title">🔥 AS MAIS PEDIDAS</div>
+      <div class="pedida-card">
+        <div class="pedida-nome">Fome do Cão</div>
+        <div class="pedida-desc">A que abre o show e já fecha o negócio. Ninguém fica parado.</div>
+        <div class="pedida-fire">🔥🔥🔥🔥🔥</div>
+      </div>
+      <div class="pedida-card">
+        <div class="pedida-nome">Mulher de Fases</div>
+        <div class="pedida-desc">Forró raiz que vira mosh pit. A plateia toda canta a letra.</div>
+        <div class="pedida-fire">🔥🔥🔥🔥</div>
+      </div>
+      <div class="pedida-card">
+        <div class="pedida-nome">Selim</div>
+        <div class="pedida-desc">Nossa homenagem. Quando essa toca, para tudo.</div>
+        <div class="pedida-fire">🔥🔥🔥🔥🔥</div>
+      </div>
+      <div class="pedida-card">
+        <div class="pedida-nome">Reggae do Manero</div>
+        <div class="pedida-desc">Seis minutos. Quem tá no bar para de beber pra curtir.</div>
+        <div class="pedida-fire">🔥🔥🔥🔥</div>
+      </div>
+      <div class="pedida-card">
+        <div class="pedida-nome">Esporrei na Manivela</div>
+        <div class="pedida-desc">Polêmica. Engraçada. Impossível não cantar junto.</div>
+        <div class="pedida-fire">🔥🔥🔥🔥🔥</div>
+      </div>
     </div>
-  </div>
-  <div class="reveal" style="transition-delay:.2s;">
-    <div class="songs-grid" id="songsGrid"></div>
-    <div class="rep-empty" id="repEmpty">Nenhuma música encontrada. Tenta outra busca!</div>
   </div>
 </section>
 
@@ -526,45 +639,51 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 
 <div class="divider"></div>
 
-<!-- CONTRATAR -->
+<!-- CONTRATAR: STATS + DEPOIMENTOS -->
 <section id="contratar">
   <div class="reveal">
-    <div class="s-tag">// Informações técnicas</div>
-    <h2 class="s-title">CONTRATAR</h2>
+    <div class="s-tag">// Números que falam por si</div>
+    <h2 class="s-title">A SELIM<br>EM NÚMEROS</h2>
   </div>
   <div class="contratar-grid">
+    <!-- STATS + DEPOIMENTOS -->
     <div class="reveal" style="transition-delay:.1s;">
-      <div class="rider-box">
-        <div class="rider-title">🚐 RIDER TÉCNICO</div>
-        <div class="rider-item">
-          <span class="rider-icon">🎸</span>
-          <div class="rider-txt"><strong>Formação</strong>2 guitarras · baixo · bateria · voz principal + backing</div>
+      <div class="stats-box">
+        <div class="stat">
+          <div class="stat-num">38</div>
+          <div class="stat-label">Músicas no bagageiro</div>
         </div>
-        <div class="rider-item">
-          <span class="rider-icon">🎚️</span>
-          <div class="rider-txt"><strong>Canais de Som</strong>11 canais (bumbo, caixa, toms, overheads, baixo DI, 2 guitarras, voz, backing)</div>
+        <div class="stat">
+          <div class="stat-num">6+</div>
+          <div class="stat-label">Anos de estrada</div>
         </div>
-        <div class="rider-item">
-          <span class="rider-icon">🔊</span>
-          <div class="rider-txt"><strong>Monitores</strong>Mínimo 3 vias independentes</div>
+        <div class="stat">
+          <div class="stat-num">2h30</div>
+          <div class="stat-label">De show no tanque</div>
         </div>
-        <div class="rider-item">
-          <span class="rider-icon">📐</span>
-          <div class="rider-txt"><strong>Palco Mínimo</strong>4m × 3m</div>
-        </div>
-        <div class="rider-item">
-          <span class="rider-icon">⚡</span>
-          <div class="rider-txt"><strong>Energia</strong>4 tomadas aterradas próximas à bateria</div>
-        </div>
-        <div class="rider-item">
-          <span class="rider-icon">⏱️</span>
-          <div class="rider-txt"><strong>Duração</strong>Sets de 45min a 2h30min · cachê sob consulta</div>
+        <div class="stat">
+          <div class="stat-num">4</div>
+          <div class="stat-label">Caras no palco · 1 bagunça</div>
         </div>
       </div>
+      <div class="dep-title">💬 O QUE DIZEM DE NÓS</div>
+      <div class="dep-card">
+        <div class="dep-texto">A casa lotou e o público ficou até o último segundo. Uma das melhores noites do bar.</div>
+        <div class="dep-autor">— Garça Moto Rock Festival, 2025</div>
+      </div>
+      <div class="dep-card">
+        <div class="dep-texto">O público já chegou pedindo Raimundos e a Selim entregou demais. Energia total do começo ao fim.</div>
+        <div class="dep-autor">— Biroska Bar · Lins SP</div>
+      </div>
+      <div class="dep-card">
+        <div class="dep-texto">Quem foi sabe — quem não foi, perdeu. A Selim não deixa ninguém parado.</div>
+        <div class="dep-autor">— Fã · Instagram</div>
+      </div>
     </div>
+    <!-- CTA -->
     <div class="contratar-cta reveal" style="transition-delay:.2s;">
       <h3>FECHA<br>A DATA<br>COM A<br>GENTE</h3>
-      <p>Motoclube, bar, festival, aniversário de rockeiro — a Selim toca. Fala com a gente pelo WhatsApp ou e-mail que a gente responde rápido.</p>
+      <p>Motoclube, bar, festival, aniversário de rockeiro — a Selim toca. Fala com a gente que a gente responde rápido.</p>
       <div style="display:flex;flex-direction:column;gap:12px;">
         <a href="https://wa.me/5514996888890" class="btn btn-wa" target="_blank" rel="noopener">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.558 4.116 1.532 5.845L0 24l6.335-1.652A11.954 11.954 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.002-1.368l-.36-.214-3.722.97.991-3.625-.235-.372A9.818 9.818 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
@@ -645,34 +764,13 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 </section>
 
 <footer>
-  <div class="ft-logo"><img src="img/logo.jpg.jpeg" alt="Selim"></div>
+  <div class="ft-logo" style="font-family:var(--display);font-size:18px;letter-spacing:3px;color:#333;">SELIM</div>
   <div class="ft-copy">© 2025 Selim Raimundos Cover · Marília SP</div>
   <a href="mailto:raimundoscoverselim@gmail.com" class="ft-mail">raimundoscoverselim@gmail.com</a>
 </footer>
 
 <script>
-/* ─── SONGS ─── */
-const SONGS=[["Fome do Cão","3:29"],["Puteiro em João Pessoa II","3:10"],["Mato Véio","2:08"],["Bê a Bá","2:32"],["O Pão da Minha Prima","2:42"],["Rapante","3:04"],["Nêga Jurema","1:54"],["Bonita","2:04"],["Tora Tora","4:16"],["Eu Quero Ver o Oco","4:12"],["Andar na Pedra","3:38"],["Esporrei na Manivela","4:09"],["Pequena Raimunda","2:27"],["Baile Funky","4:01"],["Palhas do Coqueiro","2:00"],["Mulher de Fases","3:34"],["Deixa Eu Falar...","4:43"],["A Mais Pedida","3:54"],["I Saw You Saying","3:25"],["Selim","4:15"],["20 e Poucos Anos","2:05"],["Infeliz Natal","2:19"],["Pompem","2:43"],["Aquela","3:26"],["Papeau Nuky Doe","2:02"],["Herbocinética","3:16"],["Língua Presa","1:41"],["Boca de Lata","2:28"],["Opa! Peraí, Caceta","2:31"],["Reggae do Manero","6:00"],["Me Lambe","3:17"],["Nariz de Doze","3:02"],["Cajueiro & Rio das Pedras","2:31"],["Minha Cunhada","1:22"],["Sereia da Pedreira","1:49"],["Cintura Fina","2:36"],["Tá Querendo Desquitar","3:08"],["Marujo","2:33"]];
-
-function buildSongs(list){
-  const grid=document.getElementById('songsGrid');
-  const empty=document.getElementById('repEmpty');
-  const count=document.getElementById('repCount');
-  if(!list.length){grid.innerHTML='';empty.style.display='block';return;}
-  empty.style.display='none';
-  count.textContent=list.length+' música'+(list.length!==1?'s':'')+' no bagageiro 🎸';
-  // divide em 2 colunas
-  const mid=Math.ceil(list.length/2);
-  const col1=list.slice(0,mid);
-  const col2=list.slice(mid);
-  const mkRows=arr=>arr.map(([n,d])=>`<div class="song-row"><span class="song-name">${n}</span><span class="song-dur">${d}</span></div>`).join('');
-  grid.innerHTML=`<div class="songs-col">${mkRows(col1)}</div><div class="songs-col">${mkRows(col2)}</div>`;
-}
-buildSongs(SONGS);
-function filterSongs(){
-  const q=document.getElementById('repSearch').value.trim().toLowerCase();
-  buildSongs(q?SONGS.filter(([n])=>n.toLowerCase().includes(q)):SONGS);
-}
+/* ─── SONGS: seção removida, ver repertório estático no HTML ─── */
 
 /* ─── YOUTUBE ─── */
 let ytp=null,ytReady=false,ytTick=null;
@@ -700,32 +798,40 @@ function startTick(){if(ytTick)clearInterval(ytTick);ytTick=setInterval(()=>{if(
 
 /* ─── INTRO ─── */
 (function(){
-  const iNum=document.getElementById('iNum');
-  const iWord=document.getElementById('iWord');
-  const iSub=document.getElementById('iSub');
-  const iBar=document.getElementById('iBar');
-  const intro=document.getElementById('intro');
-  const nums=['3','2','1'];
-  let i=0;
-  function showNum(){
-    if(i<nums.length){
-      iNum.textContent=nums[i];
-      iNum.classList.add('show');
-      iBar.style.width=((i+1)/3*180)+'px';
-      setTimeout(()=>{iNum.classList.remove('show');setTimeout(()=>{i++;showNum();},150);},500);
-    } else {
-      iNum.style.display='none';
-      iWord.style.display='block';
-      iSub.style.display='block';
-      setTimeout(()=>{iWord.classList.add('show');iSub.classList.add('show');},50);
+  const iNum    = document.getElementById('iNum');
+  const iReveal = document.getElementById('iReveal');
+  const iBar    = document.getElementById('iBar');
+  const intro   = document.getElementById('intro');
+  const NUMS    = ['3','2','1'];
+  let i = 0;
+
+  function tick(){
+    if(i < NUMS.length){
+      // mostrar número
+      iNum.textContent = NUMS[i];
+      iNum.classList.remove('hide');
+      requestAnimationFrame(()=>requestAnimationFrame(()=>iNum.classList.add('show')));
+      iBar.style.width = ((i+1)/3*100)+'%';
+      // sumir após 480ms
       setTimeout(()=>{
-        intro.style.transition='opacity .4s';
-        intro.style.opacity='0';
-        setTimeout(()=>intro.style.display='none',400);
-      },900);
+        iNum.classList.remove('show');
+        iNum.classList.add('hide');
+        setTimeout(()=>{ i++; tick(); }, 180);
+      }, 480);
+    } else {
+      // revelar SELIM
+      iNum.style.display = 'none';
+      iBar.style.width = '100%';
+      requestAnimationFrame(()=>requestAnimationFrame(()=>iReveal.classList.add('show')));
+      // sumir intro
+      setTimeout(()=>{
+        intro.style.transition = 'opacity .45s ease-out';
+        intro.style.opacity = '0';
+        setTimeout(()=>{ intro.style.display='none'; }, 450);
+      }, 1000);
     }
   }
-  setTimeout(showNum,400);
+  setTimeout(tick, 350);
 })();
 
 /* ─── NAV ─── */
