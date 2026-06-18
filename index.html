@@ -886,44 +886,35 @@ async function vmEnsure(){
 }
 
 function vmRender(){
-  const el=document.getElementById('vmSongs'); if(!el) return;
-  const tot=Math.max(vmTotal,1);
-  const sorted=[...VM_SONGS].sort((a,b)=>(vmCounts[b.id]||0)-(vmCounts[a.id]||0));
-  const topIds=sorted.slice(0,VM_MAX).map(s=>s.id);
-
-  el.innerHTML = sorted.map((s,i)=>{
-    const cnt=vmCounts[s.id]||0;
-    const pct=Math.round(cnt/tot*100);
-    const isSel=vmSel.has(s.id);
-    const isTop=topIds.includes(s.id)&&vmVoted&&vmTotal>0;
-    const rank=i+1;
-    return `<div class="vm-song${isSel?' sel':''}${isTop?' winning':''}" 
-                 onclick="${vmVoted?'':'vmToggle(''+s.id+'')'}">
-      <div class="vm-song-rank${isTop?' top':''}">#${rank}</div>
-      <div class="vm-song-body">
-        <div class="vm-song-nome">${s.nome}</div>
-        <div class="vm-song-desc">${s.desc}</div>
-      </div>
-      <div class="vm-song-right">
-        ${vmVoted?`<span class="vm-song-pct">${pct}%</span>`:''}
-        ${isSel?'<span class="vm-song-check">✓</span>':''}
-        ${isTop?'<span class="vm-badge">GARANTIDA 🔒</span>':''}
-      </div>
-      <div class="vm-song-bar" style="width:${vmVoted?pct:0}%"></div>
-    </div>`;
-  }).join('');
-
-  const tc=document.getElementById('vmTotalCount'); if(tc) tc.textContent=vmTotal||'0';
-  const tl=document.getElementById('vmTotalLabel'); if(tl) tl.textContent=vmTotal>0?vmTotal+' voto'+(vmTotal!==1?'s':'')+' registrados':'Seja o primeiro a votar!';
-  const sc=document.getElementById('vmSelCount');  if(sc) sc.textContent=vmSel.size;
-  const btn=document.getElementById('vmBtn');
-  if(btn){
-    if(vmVoted){btn.style.display='none';const t=document.getElementById('vmThanks');if(t)t.style.display='block';}
-    else{
-      btn.disabled=vmSel.size!==VM_MAX;
-      btn.textContent=vmSel.size===VM_MAX?'CONFIRMAR MEUS '+VM_MAX+' VOTOS 🤘':'ESCOLHA MAIS '+(VM_MAX-vmSel.size)+' MÚSICA'+(VM_MAX-vmSel.size!==1?'S':'');
-    }
+  var el=document.getElementById('vmSongs'); if(!el) return;
+  var tot=Math.max(vmTotal,1);
+  var sorted=VM_SONGS.slice().sort(function(a,b){return (vmCounts[b.id]||0)-(vmCounts[a.id]||0);});
+  var topIds=sorted.slice(0,VM_MAX).map(function(s){return s.id;});
+  var rows='';
+  for(var i=0;i<sorted.length;i++){
+    var s=sorted[i];
+    var cnt=vmCounts[s.id]||0;
+    var pct=Math.round(cnt/tot*100);
+    var isSel=vmSel.has(s.id);
+    var isTop=topIds.indexOf(s.id)>=0&&vmVoted&&vmTotal>0;
+    var cls='vm-song'+(isSel?' sel':'')+(isTop?' winning':'');
+    var oc=vmVoted?'':'vmToggle(\'' +s.id+ '\')';
+    rows+='<div class="'+cls+'" onclick="'+oc+'">';
+    rows+='<div class="vm-song-rank'+(isTop?' top':'')+'">#'+(i+1)+'</div>';
+    rows+='<div class="vm-song-body">';
+    rows+='<div class="vm-song-nome">'+s.nome+'</div>';
+    rows+='<div class="vm-song-desc">'+s.desc+'</div>';
+    rows+='</div>';
+    rows+='<div class="vm-song-right">';
+    if(vmVoted) rows+='<span class="vm-song-pct">'+pct+'%</span>';
+    if(isSel)   rows+='<span class="vm-song-check">&#10003;</span>';
+    if(isTop)   rows+='<span class="vm-badge">GARANTIDA &#128274;</span>';
+    rows+='</div>';
+    rows+='<div class="vm-song-bar" style="width:'+( vmVoted?pct:0 )+'%"></div>';
+    rows+='</div>';
   }
+  el.innerHTML=rows;
+
 }
 
 function vmToggle(id){
