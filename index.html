@@ -273,6 +273,7 @@ section{padding:96px 48px;}
 /* video dentro do modal */
 .ev-video-wrap{position:relative;width:100%;padding-top:56.25%;background:#000;margin-bottom:32px;}
 .ev-video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:none;}
+.ev-video-wrap video{position:absolute;inset:0;width:100%;height:100%;background:#000;}
 /* fotos dentro do modal */
 .ev-fotos-title{font-family:var(--mono);font-size:10px;letter-spacing:3px;color:var(--red);text-transform:uppercase;margin-bottom:16px;}
 .ev-fotos-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;}
@@ -797,8 +798,11 @@ const EVENTOS = [
     tipo: 'Festival de Rock · no Grêmio',
     local: 'Garça · SP',
     data: 'Mai 2025',
-    cover: null, video: null, fotos: [],
-    status: 'breve'
+    cover: 'videos/berinrock.jpg',
+    video: null,
+    videoFile: 'videos/berinrock.mp4',
+    fotos: [],
+    status: 'ativo'
   },
   {
     id: 'fusion-fight',
@@ -806,8 +810,11 @@ const EVENTOS = [
     tipo: 'Evento Radical',
     local: 'Garça · SP',
     data: 'Out 2025',
-    cover: null, video: null, fotos: [],
-    status: 'breve'
+    cover: 'videos/fusion-fight.jpg',
+    video: null,
+    videoFile: 'videos/fusion-fight.mp4',
+    fotos: [],
+    status: 'ativo'
   },
   {
     id: 'halloween-mosh',
@@ -815,8 +822,11 @@ const EVENTOS = [
     tipo: 'Bar · Halloween',
     local: 'Tupã · SP',
     data: 'Nov 2025',
-    cover: null, video: null, fotos: [],
-    status: 'breve'
+    cover: 'videos/halloween-mosh.jpg',
+    video: null,
+    videoFile: 'videos/halloween-mosh.mp4',
+    fotos: [],
+    status: 'ativo'
   },
   {
     id: 'piramba-jetflex',
@@ -824,8 +834,11 @@ const EVENTOS = [
     tipo: 'Evento',
     local: 'Garça · SP',
     data: 'Out 2025',
-    cover: null, video: null, fotos: [],
-    status: 'breve'
+    cover: 'videos/piramba-jetflex.jpg',
+    video: null,
+    videoFile: 'videos/piramba-jetflex.mp4',
+    fotos: [],
+    status: 'ativo'
   },
   {
     id: 'xeque-mate',
@@ -833,8 +846,11 @@ const EVENTOS = [
     tipo: 'Show em Bar',
     local: 'Marília · SP',
     data: 'Jul 2025',
-    cover: null, video: null, fotos: [],
-    status: 'breve'
+    cover: 'videos/xeque-mate.jpg',
+    video: null,
+    videoFile: 'videos/xeque-mate.mp4',
+    fotos: [],
+    status: 'ativo'
   },
   {
     id: 'motorock-tupa',
@@ -842,8 +858,11 @@ const EVENTOS = [
     tipo: 'Festival de Moto',
     local: 'Tupã · SP',
     data: 'Jul 2025',
-    cover: null, video: null, fotos: [],
-    status: 'breve'
+    cover: 'videos/motorock-tupa.jpg',
+    video: null,
+    videoFile: 'videos/motorock-tupa.mp4',
+    fotos: [],
+    status: 'ativo'
   }
 ];
 
@@ -859,7 +878,7 @@ const EVENTOS = [
     const counts = isAtivo
       ? `<div class="ev-counts">
           ${ev.fotos.length ? `<span>📸 ${ev.fotos.length} fotos</span>` : ''}
-          ${ev.video ? `<span>▶ Vídeo</span>` : ''}
+          ${(ev.video||ev.videoFile) ? `<span>▶ Vídeo</span>` : ''}
         </div>`
       : '';
     return `<div class="ev-card${isAtivo ? '' : ' breve'}" ${isAtivo ? `onclick="openEvento('${ev.id}')"` : ''}>
@@ -881,12 +900,13 @@ function openEvento(id) {
   const modal = document.getElementById('evModal');
   const bg = document.getElementById('evModalBg');
 
-  const videoHtml = ev.video
-    ? `<div class="ev-fotos-title">▶ VÍDEO DO SHOW</div>
-       <div class="ev-video-wrap" style="margin-bottom:32px;">
-         <iframe src="https://www.youtube.com/embed/${ev.video}?rel=0&modestbranding=1" allowfullscreen></iframe>
-       </div>`
-    : '';
+  const _vwrap = (inner)=>`<div class="ev-fotos-title">▶ VÍDEO DO SHOW</div>
+       <div class="ev-video-wrap" style="margin-bottom:32px;">${inner}</div>`;
+  const videoHtml = ev.videoFile
+    ? _vwrap(`<video controls playsinline preload="metadata"${ev.cover?` poster="${ev.cover}"`:''} src="${ev.videoFile}"></video>`)
+    : (ev.video
+      ? _vwrap(`<iframe src="https://www.youtube.com/embed/${ev.video}?rel=0&modestbranding=1" allowfullscreen></iframe>`)
+      : '');
   const quoteHtml = ev.quote
     ? `<div style="border-left:3px solid var(--red);padding:14px 18px;margin-bottom:28px;background:var(--p3);">
         <div style="font-style:italic;font-size:15px;color:var(--ink);opacity:.85;line-height:1.6;">${ev.quote}</div>
